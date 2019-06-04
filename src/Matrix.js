@@ -5,8 +5,18 @@ import ColorSelector from './ColorSelector.js'
 
 export default class Matrix extends Component {
 
-  constructor() {
-    super()
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      color: this.props.value
+    }
+  }
+
+  setColor = (hexColor) => {
+    this.setState({
+      color: hexColor
+    })
   }
 
   genRow = (vals) => (
@@ -14,14 +24,14 @@ export default class Matrix extends Component {
   )
 
   genMatrix = () => (
-    this.props.values.map((rowVals, idx) => <div key={idx} className="row">{this.genRow(rowVals)}</div>)
+    this.props.values.map((rowVals, idx) => <div key={idx} className="row" onClick={this.setColor}>{this.genRow(rowVals)}</div>)
   )
 
 
   render() {
     return (
       <div id="app">
-        <ColorSelector />
+        <ColorSelector colorHandler={this.setColor} />
         <div id="matrix">
           {this.genMatrix()}
         </div>
